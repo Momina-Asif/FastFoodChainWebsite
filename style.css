@@ -1,0 +1,522 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+    --light-color: #2ec27d;
+}
+.primary-color{
+    color: #17945ad3;
+}
+.light-color{
+    color: white;
+}
+.margin-y{
+    margin: .5rem 0;
+}
+a{
+    text-decoration: none;
+}
+li{
+    list-style: none;
+}
+.btn{
+    padding: .5rem;
+    background: var(--light-color);
+    border-radius: 2px;
+    transition: all .25s;
+}
+.btn:hover{
+    background: #333;
+}
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background: #333;
+    color: white;
+    position: sticky;
+    top: 0;
+    left: 0;
+    z-index: 2;
+}
+.navbar-header a{
+    padding: .5rem;
+}
+.navbar-header span i{
+    padding: 0 .25rem;
+}
+.navbar-list ul{
+    display: flex;
+}
+.navbar-list ul li a{
+    padding: .5rem;
+    margin: 0 .25rem;
+    border-radius: 2px;
+    transition: all .25s;
+}
+.navbar-list ul li a:hover{
+    background: var(--light-color);
+}
+/* SHOWCASE */
+.showcase{
+    height: 100vh;
+    position: relative;
+    background: url('./jason-leung-poI7DelFiVA-unsplash.jpg') no-repeat center center/cover;
+    
+}
+.showcase-heading{
+    font-weight: bold;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+.image-overlay{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 0 2rem;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+/* WHAT */
+.what{
+    padding: 2rem;
+    text-align: center;
+}
+.whatContent{
+    display: flex;
+    justify-content: space-evenly;
+}
+.box{
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+}
+.what i{
+    background-color: var(--light-color);
+    width: fit-content;
+    margin: auto;
+    padding: 1rem;
+    border-radius: 50%;
+    
+}
+.wrapper{
+    background-color: #333;
+    width: 100%;
+    height: 95vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.contact{
+    display: flex;
+    max-width: 500px;
+    min-width: 300px;
+    align-self: center;
+    border-radius: 5px;
+}
+.form{
+    width: 100%;
+    background: #222;
+    color: white;
+    padding: 2rem;
+    align-items: center;
+    justify-content: center;
+}
+.form input, textarea{
+    display: block;
+    width: 100%;
+    border: none;
+    padding: .5rem .25rem;
+    margin-bottom: .5rem;
+}
+.form button{
+    display: inline-block;
+    width: 100%;
+    padding: .5rem;
+    background: #333;
+    border: none;
+    transition: all .25s;
+}
+.form button:hover{
+    cursor: pointer;
+    background: #555;
+}
+
+/* FOOTER */
+.footer{
+    background: #333;
+    color: white;
+    text-align: center;
+    padding: 1rem;
+}
+
+
+
+/* MENU */
+
+.menu-container{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    padding: 20px;
+}
+
+/* .menu-container h2{
+
+} */
+
+.menu-wrap{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    /* padding: 30px; */
+    flex-wrap: wrap;
+    /* background-color: #555; */
+    /* color: #fff; */
+}
+
+.menu-item{
+    background-color: #ddd;
+    min-width: 33%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
+    margin: 10px 0;
+    /* border: solid 1px #222;
+   
+    border-radius: 2px; */
+}
+
+.bg-img{
+    margin: 20px 0;
+    width: 100%;
+    height: 300px;
+    
+}
+
+.photo1{
+    background: url('./burger2.webp') no-repeat center center/cover;
+}
+.photo2{
+    background: url('./burger1.webp') no-repeat center center/cover;
+}
+.photo3{
+    background: url('./burger3.jpg') no-repeat center center/cover;
+}
+.photo4{
+    background: url('./pizza1.jpg') no-repeat center center/cover;
+}
+.photo5{
+    background: url('./pizza2.webp') no-repeat center center/cover;
+}
+.photo6{
+    background: url('./pizza3.jpg') no-repeat center center/cover;
+}
+.photo7{
+    background: url('./mocktail.jpg') no-repeat center center/cover;
+}
+.photo8{
+    background: url('./smoothy.jpg') no-repeat center center/cover;
+}
+.photo9{
+    background: url('./soda.jpg') no-repeat center center/cover;
+}
+
+.option{
+    width: 50%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 2px;
+    margin-bottom: 5px;
+}
+
+.quantity{
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin: 5px 0;
+    width: 50%;
+}
+
+.menu-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #333; /* Example background color */
+    color: #fff; /* Example text color */
+    padding: 20px; /* Example padding */
+    text-align: center; /* Center the content */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .place{
+    padding: 10px;
+    color: #fff;
+    background-color: #8cac69;
+    border: none;
+    border-radius: 2px;
+    margin: 0 10px;
+    align-items: center;
+  }
+
+  .place:hover{
+    cursor: pointer;
+    background-color: #a0d069;
+  }
+
+
+  .promo{
+    padding: 10px;
+    color: #fff;
+    background-color: #8cac69;
+    border: none;
+    border-radius: 2px;
+    margin: 0 10px;
+    align-items: center;
+  }
+
+  .promo:hover{
+    cursor: pointer;
+    background-color: #a0d069;
+  }
+
+
+  #address{
+    padding: 5px;
+    border: solid 1px #ddd;
+  }
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #f2f2f2;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 30px;
+}
+
+.card {
+    width: calc(33.33% - 20px);
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-bottom: 1px solid #ccc;
+}
+
+.card-body {
+    padding: 20px;
+}
+
+.item-name {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.item-description {
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.item-price {
+    font-size: 18px;
+    color: #333;
+}
+/* .add-to-cart {
+    display: block;
+    width: 100%;
+    margin-top: 10px;
+    padding: 8px 16px;
+    background-color: #17945ad3;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.add-to-cart:hover {
+    background-color: #17945ad3;
+} */
+
+.quantity-select {
+    margin-top: 10px;
+    width: 100%;
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    appearance: none;
+    background-color: #fff;
+    font-size: 16px;
+    color: #333;
+    cursor: pointer;
+}
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+footer {
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+    margin-top: 20px;
+}
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  th, td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+  th {
+    background-color: #f2f2f2;
+  }
+
+  .container {
+    max-width: 800px;
+    margin: 20px auto;
+    background-color: #000000c7;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+.container1 {
+    max-width: 800px;
+    margin: 20px auto;
+    background-color: #fffefec7;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+h2 {
+    margin-top: 0;
+    color: #333;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+}
+
+thead {
+    background-color: #f2f2f2;
+}
+
+.Menu {
+    text-align: center; /* Center-align the text */
+    margin-bottom: 20px; /* Add some bottom margin for spacing */
+}
+
+.Menu h2 {
+    font-size: 24px; /* Adjust font size as needed */
+    color: #333; /* Set the color of the text */
+    font-weight: bold; /* Make the text bold */
+}
+.fixed-division {
+    position: fixed; /* Fixed positioning */
+    bottom: 0; /* Position at the bottom of the viewport */
+    left: 0; /* Position at the left of the viewport */
+    width: 100%; /* Full width */
+    background-color: #17945ad3; /* Black background color */
+    padding: 10px; /* Add padding for content */
+    color: #fff; /* White text color */
+    text-align: center; /* Center-align the text */
+    z-index: 1000; /* Optional: Set z-index to ensure it's above other content */
+}
+
+.rounded-image {
+    border-radius: 10px; /* Adjust the border-radius value as needed */
+}
+.card {
+    transition: box-shadow 0.3s ease;
+}
+
+.card:hover {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Adjust shadow properties as needed */
+    transform: scale(1.05); /* Optionally, apply a scale transform */
+}
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+th, td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+.add-to-cart {
+    position: absolute; /* Position the button absolutely within the container */
+    bottom: 23px;
+    right: 20px; 
+    background-color: #17945ad3;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px; 
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); 
+    display: none; /* Initially hide the button */
+    font: 10
+}
+
+.card:hover .add-to-cart {
+    display: block; /* Display the button only when the container is hovered */
+}
+

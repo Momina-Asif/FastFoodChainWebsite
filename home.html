@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" media="screen and (max-width: 768px)" href="./mobile.css">
+    <link rel="stylesheet" media="screen and (min-width: 1100px)" href="./widescreen.css">
+    <title>Taste Heaven</title>
+</head>
+<body>
+    <div class="navbar">
+        <div class="navbar-header">
+            <h2>
+                <a href="#" class="light-color">
+                    <span class="primary-color"><i class="fa-solid fa-utensils"></i>Taste</span>Heaven
+                </a>
+            </h2>
+        </div>
+        <div class="navbar-list">
+            <ul id="navbar-links">
+                <li>
+                    <a href="#" class="light-color">Home</a>
+                </li>
+                <li>
+                    <a href="#what" class="light-color">What</a>
+                </li>
+                <li>
+                    <a href="./YourCart.html" class="light-color">Your Cart</a>
+                </li>
+                <!-- "Log Out" or "Log In" link will be inserted here dynamically -->
+            </ul>
+        </div>
+    </div>
+
+    <div class="showcase" id="showcase">
+        <div class="image-overlay light-color">
+            <h1 class="margin-y showcase-heading">Taste Heaven</h1>
+            <p class="margin-y">At "Taste Haven," our passion for exceptional food shines through in every bite. Savor our signature burgers, handcrafted with premium beef patties or flavorful veggie alternatives, nestled between soft brioche buns and topped with a variety of gourmet ingredients. Indulge in our artisanal pizzas, expertly baked to perfection with a crispy crust and topped with a medley of fresh toppings, from classic favorites to unique creations. Pair your meal with a selection from our extensive beverage menu, featuring refreshing sodas, craft beers, and specialty cocktails. With cozy ambiance and friendly service, "Taste Haven" is your destination for unforgettable dining experiences.</p>
+            <a href="./menu.html" class="btn light-color margin-y">Menu</a>
+        </div>
+    </div>
+
+    <div class="what" id="what">
+        <h2 class="margin-y"><span class="primary-color">What</span> We Offer</h2>
+        <div class="whatContent">
+            <div class="box">
+                <i class="fas fa-utensils fa-2x"></i>
+                <h3 class="margin-y">Continental</h3>
+                <p>A culinary journey through the diverse and flavorful world of Continental cuisine. Our menu offers a tantalizing array of dishes crafted with expertise, ensuring each bite is a symphony of taste</p>
+            </div>
+            <div class="box">
+                <i class="fa-solid fa-pizza-slice fa-2x"></i>
+                <!-- <i class="fas fa-book"></i> -->
+                <h3 class="margin-y">Fast Food</h3>
+                <p>Indulge in the epitome of convenience and flavor with our irresistible fast food offerings! Dive into a world of savory delights crafted with the finest ingredients and prepared to perfection.</p>
+            </div>
+            <div class="box">
+                <i class="fas fa-wine-glass fa-2x"></i>
+                <h3 class="margin-y">Beverages</h3>
+                <p>Quench your thirst with a range of beverages, from classic sodas to exotic fruit smoothies and refreshing mocktails. Elevate your dining experience with our handcrafted beverages.</p>
+            </div>
+        </div>
+    </div>
+    <!-- <a href="signup.html">Go to Login</a> -->
+    <script>
+        // Function to check if the user is logged in
+        function checkLoggedIn() {
+            fetch('/check-login')
+            .then(response => response.json())
+            .then(data => {
+                const navbarLinks = document.getElementById('navbar-links');
+                if (data.loggedIn) {
+                    // User is logged in, so display "Log Out" link
+                    const logoutLink = document.createElement('li');
+                    logoutLink.innerHTML = '<a href="/logout" class="light-color">Log Out</a>';
+                    navbarLinks.appendChild(logoutLink);
+                } else {
+                    // User is not logged in, so display "Log In" link
+                    const loginLink = document.createElement('li');
+                    loginLink.innerHTML = '<a href="/login" class="light-color">Log In</a>';
+                    navbarLinks.appendChild(loginLink);
+                }
+            })
+            .catch(error => console.error('Error checking login status:', error));
+        }
+
+        // Call the function to check login status when the page loads
+        checkLoggedIn();
+    </script>
+</body>
+<footer>
+    <p>&copy; 2024 Taste Heaven. All rights reserved.</p>
+</footer>
+</html>

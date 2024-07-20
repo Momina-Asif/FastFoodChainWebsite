@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./mobile.css">
+</head>
+<body>
+    <div class="navbar">
+        <div class="navbar-header">
+            <h2>
+                <a href="#" class="light-color">
+                    <span class="primary-color"><i class="fa-solid fa-utensils"></i>Taste</span>Heaven
+                </a>
+            </h2>
+        </div>
+        <div class="navbar-list">
+            <ul>
+                <li>
+                    <a href="home" class="light-color">Home</a>
+                </li>
+                <li>
+                    <a href="./signup" class="light-color">Sign Up</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="wrapper">
+        <div class="contact" id="contact">
+            <div class="form">
+                <h1 class="margin-y">Login</h1>
+                <form action="/login" method="POST">
+                    <label for="email">Email</label>
+                    <input type="email" name="email" id="email" placeholder="Enter email">
+                    <label for="password">Password</label>
+                    <input type="password" name="password" id="password" placeholder="Enter password">
+                    <button class="light-color">Send</button>
+                    <p class="margin-y"><a href="signup">Signup</a> if you dont already have an account</p>
+                    <h4 id="errorMessage" class="error-message"></h4> 
+                </form>
+            </div>
+            <div class="map">
+            </div>
+        </div>
+
+    </div>
+    <script>
+        // Get the error message element
+        const errorMessage = document.getElementById('errorMessage');
+
+        // Check if there's an error message present
+        const urlParams = new URLSearchParams(window.location.search);
+        const error = urlParams.get('error');
+
+        if (error) {
+            // If there's an error, display it on the page
+            errorMessage.innerText = error;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurant Menu</title>
+    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" media="screen and (max-width: 768px)" href="./mobile.css">
+</head>
+<body>
+    <div class="navbar">
+        <div class="navbar-header">
+            <h2>
+                <a href="#" class="light-color">
+                    <span class="primary-color"><i class="fa-solid fa-utensils"></i>Taste</span>Heaven
+                </a>
+            </h2>
+        </div>
+        <div class="navbar-list">
+            <ul id="navbar-links">
+                <li>
+                    <a href="home" class="light-color">Home</a>
+                </li>
+                <li>
+                    <a href="home" class="light-color">What</a>
+                </li>
+                <li>
+                    <a href="./YourCart.html" class="light-color">Your Cart</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="Menu">
+        <h1>Menu</h1>
+    </div>
+
+    <div class="container" id="menu-container"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuContainer = document.getElementById('menu-container');
+            // Fetch menu items from server
+            fetch('http://127.0.0.1:5000/menu')
+                .then(response => response.json())
+                .then(data => {
+                    // Display the menu items on the webpage
+                    data.forEach(item => {
+                        const card = document.createElement('div');
+                        card.classList.add('card');
+
+                        const cardBody = document.createElement('div');
+                        cardBody.classList.add('card-body');
+
+                        const itemName = document.createElement('div');
+                        itemName.classList.add('item-name');
+                        itemName.textContent = item.ItemName;
+
+                        const itemDescription = document.createElement('div');
+                        itemDescription.classList.add('item-description');
+                        itemDescription.textContent = item.descript;
+
+                        const itemPrice = document.createElement('div');
+                        itemPrice.classList.add('item-price');
+                        itemPrice.textContent = `$${item.Price}`;
+
+                        // Add image
+                        const itemImage = document.createElement('img');
+                        itemImage.classList.add('rounded-image');
+                        itemImage.src = item.image_url;
+                        itemImage.alt = item.ItemName;
+
+                        const addToCartButton = document.createElement('button');
+                        addToCartButton.classList.add('add-to-cart');
+                        addToCartButton.textContent = 'Add to Cart';
+
+                        cardBody.appendChild(itemName);
+                        cardBody.appendChild(itemDescription);
+                        cardBody.appendChild(itemPrice);
+                        cardBody.appendChild(itemImage); // Append the image element
+                        cardBody.appendChild(addToCartButton);
+                        card.appendChild(cardBody);
+                        menuContainer.appendChild(card);
+
+                        addToCartButton.addEventListener('click', () => {
+                            // Send POST request to server with item ID or name
+                            fetch('http://127.0.0.1:5000/add-to-cart', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify({ itemId: item.ItemId }) 
+                            })
+                            .then(response => {
+                                if (response.ok) {
+                                    document.getElementById('addedtocart').textContent = 'Added to Cart';
+                                    
+                                    setTimeout(() => {
+                                        document.getElementById('addedtocart').textContent = '';
+                                    }, 5000);
+                                } else {
+                                    document.getElementById('addedtocart').textContent = 'Log In to Add to Cart';
+                                    
+                                    setTimeout(() => {
+                                        document.getElementById('addedtocart').textContent = '';
+                                    }, 5000);
+                                }
+                            })
+                            .catch(error => {
+
+                                // Optionally, display error message to user
+                            });
+                        });
+                    });
+                })
+                .catch(error => {
+                    console.error('Error fetching menu items:', error);
+                    // Display error message if fetching fails
+                    menuContainer.textContent = 'Error fetching menu items. Please try again later.';
+                });
+        });
+
+        function checkLoggedIn() {
+            fetch('/check-login')
+            .then(response => response.json())
+            .then(data => {
+                const navbarLinks = document.getElementById('navbar-links');
+                if (data.loggedIn) {
+                    // User is logged in, so display "Log Out" link
+                    const logoutLink = document.createElement('li');
+                    logoutLink.innerHTML = '<a href="/logout" class="light-color">Log Out</a>';
+                    navbarLinks.appendChild(logoutLink);
+                } else {
+                    // User is not logged in, so display "Log In" link
+                    const loginLink = document.createElement('li');
+                    loginLink.innerHTML = '<a href="/login" class="light-color">Log In</a>';
+                    navbarLinks.appendChild(loginLink);
+                }
+            })
+            .catch(error => console.error('Error checking login status:', error));
+        }
+
+        // Call the function to check login status when the page loads
+        checkLoggedIn();
+
+    </script>
+        <div class="fixed-division">
+            <h3 id = "addedtocart"></h3>
+        </div>
+    <footer>
+        <p>&copy; 2024 Taste Heaven. All rights reserved.</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,36 @@
+.navbar{
+    display: flex;
+    flex-direction: column;
+}
+.navbar-header{
+    margin-bottom: 1rem;
+}
+
+.whatContent{
+    display: flex;
+    flex-direction: column;
+}
+
+.people-img{
+    display: none;
+}
+
+.whoContent{
+    width: 100%;
+}
+
+.clients-logos{
+    display: flex;
+    flex-direction: column;
+}
+.logos{
+    margin: 2rem auto;
+}
+
+.contact{
+    display: flex;
+    flex-direction: column;
+}
+.form{
+    width: 100%;
+}

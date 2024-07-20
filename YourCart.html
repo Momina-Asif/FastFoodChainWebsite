@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" media="screen and (max-width: 768px)" href="./mobile.css">
+    <title>Your Cart</title>
+</head>
+<body>
+    <div class="navbar">
+        <div class="navbar-header">
+            <h2>
+                <a href="#" class="light-color">
+                    <span class="primary-color"><i class="fa-solid fa-utensils"></i>Taste</span>Heaven
+                </a>
+            </h2>
+        </div>
+        
+        <div class="navbar-list">
+            <ul id="navbar-links">
+                <li>
+                    <a href="./home" class="light-color">Home</a>
+                </li>
+                <li>
+                    <a href="/menu.html" class="light-color">Menu</a>
+                </li>
+                <li>
+                    <a href="./YourCart.html" class="light-color">Your Cart</a>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+    <div class="container1">
+        <h2>Your Cart</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Item</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Total</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody id="cart-items">
+            </tbody>
+        </table>
+    </div>
+    <div class="menu-footer">
+        <p id="grand-total">Grand Total: $0</p>
+        <div>
+            <label for="promo-code">Promo Code:</label>
+            <input type="text" id="promo-code" name="promo-code" placeholder="Enter promo code">
+            <button class="promo">Apply</button>
+            <text id = "promotext"></text>
+        </div>
+        <div class="place-order">
+            <text id = "orderplaced"></text>
+            <button class="place">Place Order</button>
+            <label for="address">Address</label>
+            <input type="address" name="address" id="address" placeholder="Enter location">
+        </div>
+    </div>
+    <script>
+         const placeOrderButton = document.querySelector(".place-order button");
+        placeOrderButton.addEventListener("click", placeOrder);
+        // Function to place the order
+function placeOrder() {
+    const address = document.getElementById('address').value.trim();
+    // Check if the user is logged in
+    fetch('/check-login')
+        .then(response => response.json())
+        .then(data => {
+            if (!data.loggedIn) {
+                // If user is not logged in, display a message prompting them to log in
+                document.getElementById('orderplaced').innerText = "Please log in to place an order.";
+                setTimeout(() => {
+                    document.getElementById('orderplaced').innerText = "";
+                }, 5000);
+                return;
+            }
+            // User is logged in, proceed with placing the order
+            if (!address) {
+                document.getElementById('orderplaced').innerText = "Enter Your Address";
+                fetchUserOrders();
+                setTimeout(() => {
+                    document.getElementById('orderplaced').innerText = "";
+                }, 5000);
+                return;
+            }
+            // Perform actions to place the order
+            document.getElementById('orderplaced').innerText = "Order placed successfully";
+            fetchUserOrders();
+            setTimeout(() => {
+                document.getElementById('orderplaced').innerText = "";
+            }, 5000);
+            fetch('http://127.0.0.1:5000/update-order-status', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ status: 'placed' }), // Send order ID and new status
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Handle response from server if needed
+                document.getElementById('orderplaced').innerText = "Order placed successfully";
+            })
+            .catch(error => {
+                console.error('Error placing order:', error);
+            });
+        })
+        .catch(error => console.error('Error checking login status:', error));
+}
+
+        // Function to fetch user orders from the server
+    // Function to fetch user orders from the server
+function fetchUserOrders() {
+    // Check if the user is logged in
+    fetch('/check-login')
+        .then(response => response.json())
+        
+        .then(data => {
+            if (!data.loggedIn) {
+                // User is not logged in, so clear the cart items and hide the grand total
+                document.getElementById("cart-items").innerHTML = "";
+                document.getElementById("grand-total").style.display = "none";
+                return; // Exit the function if user is not logged in
+            }
+
+            // User is logged in, fetch user orders from the server
+            fetch('http://127.0.0.1:5000/get-user-orders')
+                .then(response => response.json())
+                .then(data => {
+                    const cartItemsContainer = document.getElementById("cart-items");
+                    const grandTotalElement = document.getElementById("grand-total");
+
+                    // Check if there are any orders for the user
+                    if (data.length === 0) {
+                        // Hide the table and grand total element
+                        cartItemsContainer.innerHTML = "<p>No items in the cart.</p>";
+                        grandTotalElement.style.display = "none";
+                    } else {
+                        cartItemsContainer.innerHTML = "";
+                        grandTotalElement.style.display = "block";
+
+                        let totalPrice = 0; // Variable to store the total price
+                        // Iterate over each order and append to the cart items container
+                        data.forEach(order => {
+                            order.forEach(item => {
+                                if (item.stat == 'Pending') {
+                                    totalPrice += item.TotalPrice;
+                                } // Add the price of each item to the total price
+                                const row = document.createElement("tr");
+                                row.innerHTML = `
+                                    <td>${item.ItemName}</td>
+                                    <td>${item.price}$</td>
+                                    <td>${item.quantity}</td>
+                                    <td>${item.TotalPrice}$</td>
+                                    <td>${item.stat}</td>
+                                `;
+                                grandTotalElement.textContent = `Grand Total: $${totalPrice}`;
+                                const deleteButton = createDeleteButton(item.ItemName, item.stat);
+                                const deleteCell = document.createElement("td");
+                                deleteCell.classList.add('deleteCell');
+                                deleteCell.appendChild(deleteButton);
+                                row.appendChild(deleteCell);
+                                cartItemsContainer.appendChild(row);
+                            });
+                        });
+                        // Update the grand total element with the calculated total price
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching user orders:', error);
+                });
+        })
+        .catch(error => console.error('Error checking login status:', error));
+}
+
+
+        function createDeleteButton(itemName, stat) {
+    const deleteButton = document.createElement("button");
+    deleteButton.textContent = "Delete";
+    deleteButton.addEventListener("click", function() {
+        deleteItem(itemName, stat);
+    });
+    return deleteButton;
+}
+function deleteItem(itemName , stat) {
+
+    // Perform actions to delete the item with the specified name
+    fetch('http://127.0.0.1:5000/delete-item', {
+        
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ itemName: itemName, stat: stat}), // Send item name
+    })
+    .then(response => response.json())
+    .then(data => {
+        // Handle response from server if needed
+        
+        // Show a confirmation message with the item name
+        alert(`Item '${itemName}' deleted successfully.`);
+        // Refresh the cart items after deletion
+
+        fetchUserOrders();
+    })
+    .catch(error => {
+        window.location.reload();
+        console.error('Error deleting item:', error);
+    });
+}
+
+
+        function checkLoggedIn() {
+            fetch('/check-login')
+            .then(response => response.json())
+            .then(data => {
+                const navbarLinks = document.getElementById('navbar-links');
+                if (data.loggedIn) {
+                    // User is logged in, so display "Log Out" link
+                    const logoutLink = document.createElement('li');
+                    logoutLink.innerHTML = '<a href="/logout" class="light-color">Log Out</a>';
+                    navbarLinks.appendChild(logoutLink);
+                } else {
+                    // User is not logged in, so display "Log In" link
+                    const loginLink = document.createElement('li');
+                    loginLink.innerHTML = '<a href="/login" class="light-color">Log In</a>';
+                    navbarLinks.appendChild(loginLink);
+                }
+            })
+            .catch(error => console.error('Error checking login status:', error));
+        }
+
+        checkLoggedIn();
+const applyPromoButton = document.querySelector(".promo");
+applyPromoButton.addEventListener("click", applyPromoCode);
+
+
+function applyPromoCode() {
+    const promoCode = document.getElementById('promo-code').value.trim();
+
+    if (!promoCode) {
+        document.getElementById('promotext').innerText = "Please Enter a Promo Code.";
+        setTimeout(() => {
+            document.getElementById('promotext').innerText = "";
+        }, 5000);
+        return;
+    }
+    
+    // Send the promo code to the backend
+    fetch('http://127.0.0.1:5000/apply-promo', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ promoCode }),
+    })
+    .then(response => response.json())
+    .then(data => {
+        // Handle response from server
+        if (data && data.promoAmount) {
+            // Promo code applied successfully, update UI
+            const promoAmount = data.promoAmount;
+            updateGrandTotalWithPromo(promoAmount);
+        } else {
+            document.getElementById('promotext').innerText = "Invalid Promo Code.";
+            setTimeout(() => {
+                document.getElementById('promotext').innerText = "";
+            }, 5000);
+        }
+    })
+    .catch(error => {
+        console.error('Error applying promo code:', error);
+    });
+}
+function updateGrandTotalWithPromo(promoAmount) {
+    const grandTotalElement = document.getElementById("grand-total");
+    const currentTotal = parseFloat(grandTotalElement.textContent.split("$")[1]);
+    if(currentTotal >= 50)
+    {const newTotal = currentTotal - currentTotal * promoAmount / 100;
+    grandTotalElement.textContent = `Grand Total: $${newTotal.toFixed(2)}`;}
+    else{
+        document.getElementById('promotext').innerText = "Order should be more than 50$";
+        setTimeout(() => {
+            document.getElementById('promotext').innerText = "";
+        }, 5000);
+    }
+}
+
+    window.onload = fetchUserOrders;
+    </script>
+</body>
+</html>
